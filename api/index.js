@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
-const moment = require('moment');
-const { parse } = require('node-html-parser');
 const cors = require('cors');
 const app = express();
 require("dotenv").config();
@@ -22,14 +20,7 @@ app.get('/api/news', (req, res) => {
         }
     })
     .then(response => {
-        const data = response.data.articles.map(article => {
-          return {
-             ...article,
-             parsedArticleDescription: parse(article.description).textContent,
-             publishDate: moment(article.published_at).format('MM/DD/YYYY h:mm A')
-          };
-        });
-        res.json(data);
+        res.json(response.data.articles);
     });
 });
 
